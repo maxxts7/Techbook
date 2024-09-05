@@ -1,4 +1,4 @@
-#Why do we even need Junction Tables?
+# Why do we even need Junction Tables?
 
 Imagine you're creating a database for Greenwood High School. You start with two simple tables:
 
