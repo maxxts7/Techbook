@@ -14,7 +14,7 @@
 [subqueries]: #subqueries "Understanding Subqueries in SQL: Types and Use Cases"
 [recursive-ctes]: #recursive-ctes "Unlocking the Power of Recursive CTEs in SQL"
 [inner-join-mechanics]: #inner-join-mechanics "What actually happens when you do an inner join?"
-[junction-tables]: #Why do we even need Junction Tables?"Why do we even need Junction Tables?"
+[junction-tables]: # Why do we even need Junction Tables? "Why do we even need Junction Tables?"
 
 
 # Why do we even need Junction Tables?
