@@ -139,7 +139,7 @@ The junction table solves the many-to-many relationship problem by allowing:
 
 This approach provides flexibility, eliminates redundancy, and allows the database to grow with Greenwood High School's needs.
 
-# Understanding SQL Joins: From Basic to Advanced
+# What actually happens when you do an inner join?
 
 SQL joins are a fundamental concept in relational databases, allowing us to combine data from multiple tables. In this post, we'll explore different types of joins, starting from basic inner joins and progressing to more advanced concepts like non-equi joins and self joins.
 
