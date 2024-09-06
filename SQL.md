@@ -299,3 +299,65 @@ Remember, the key to mastering SQL joins is practice. Try these examples on your
 
 
 artifact https://claude.site/artifacts/59c1e32c-7398-47c6-ab96-22bf0c5be477
+
+
+In the world of SQL, joining tables is a fundamental operation that allows us to combine data from multiple sources. While modern SQL syntax emphasizes explicit joins, there's an older technique that still appears in legacy code and some database systems: implicit joins. In this post, we'll explore what implicit joins are, how they work, and why they've fallen out of favor in recent years.
+
+## What Are Implicit Joins?
+
+Implicit joins, also known as comma joins or old-style joins, are a method of joining tables without using the `JOIN` keyword. Instead, they list the tables to be joined in the `FROM` clause and specify the join condition in the `WHERE` clause.
+
+Here's a simple example:
+
+```sql
+SELECT employees.name, departments.department_name
+FROM employees, departments
+WHERE employees.department_id = departments.id;
+```
+
+This query joins the `employees` and `departments` tables based on the condition specified in the `WHERE` clause.
+
+## How Do Implicit Joins Work?
+
+Under the hood, an implicit join operates in two steps:
+
+1. **Cross Join**: The `FROM` clause (`FROM employees, departments`) creates a cross join (Cartesian product) between the specified tables. This produces a result set containing every possible combination of rows from both tables.
+
+2. **Filtering**: The `WHERE` clause (`WHERE employees.department_id = departments.id`) then filters this result set, keeping only the rows where the join condition is true.
+
+## Implicit Joins vs. Explicit Joins
+
+The equivalent query using modern, explicit join syntax would look like this:
+
+```sql
+SELECT employees.name, departments.department_name
+FROM employees
+INNER JOIN departments ON employees.department_id = departments.id;
+```
+
+While both queries produce the same result, the explicit join syntax has several advantages:
+
+1. **Readability**: The join operation and its condition are clearly separated from other query components.
+2. **Maintainability**: It's easier to add or modify joins in complex queries.
+3. **Error Prevention**: Explicit joins make it harder to accidentally create unintended cross joins.
+
+## Why Have Implicit Joins Fallen Out of Favor?
+
+Several factors have contributed to the decline of implicit joins:
+
+1. **Ambiguity**: In complex queries with multiple joins and filtering conditions, implicit joins can become difficult to read and understand.
+
+2. **Performance**: While modern database optimizers usually handle both styles equally well, explicit joins can sometimes lead to better query plans.
+
+3. **SQL Standards**: The explicit join syntax has been part of the SQL standard since SQL-92, promoting its widespread adoption.
+
+4. **Error Proneness**: Forgetting the join condition in an implicit join results in a cross join, which can be computationally expensive and produce unexpected results.
+
+## Conclusion
+
+While implicit joins are still supported in most database systems for backward compatibility, they're generally considered an outdated practice. As a SQL developer or data analyst, it's crucial to understand implicit joins when encountering legacy code, but it's recommended to use explicit join syntax for new development. This approach leads to more readable, maintainable, and less error-prone SQL queries.
+
+Remember, good SQL is not just about getting the right results—it's also about writing code that clearly expresses your intent and is easy for others (including your future self) to understand and modify.
+
+
+artifact https://claude.site/artifacts/aab63526-a233-4f03-91a9-42146a284c02
