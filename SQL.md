@@ -1,10 +1,10 @@
-- [A Comprehensive Guide to SQL Window Functions](#window-functions)
-- [Demystifying Common Table Expressions (CTEs) in SQL](#ctes)
-- [The Universal View: All Joins as Filtered Cross Joins](#universal-joins)
-- [Understanding Implicit Joins in SQL: The Old‐School Approach](#implicit-joins)
-- [Understanding Subqueries in SQL: Types and Use Cases](#subqueries)
-- [Unlocking the Power of Recursive CTEs in SQL](#recursive-ctes)
-- [What actually happens when you do an inner join?](#inner-join-mechanics)
+- [A Comprehensive Guide to SQL Window Functions](#a-comprehensive-guide-to-sql-window-functions)
+- [Demystifying Common Table Expressions (CTEs) in SQL](#demystifying-common-table-expressions-ctes-in-sql)
+- [The Universal View: All Joins as Filtered Cross Joins](#the-universal-view-all-joins-as-filtered-cross-joins)
+- [Understanding Implicit Joins in SQL: The Old‐School Approach](#understanding-implicit-joins-in-sql-the-old-school-approach)
+- [Understanding Subqueries in SQL: Types and Use Cases](#understanding-subqueries-in-sql-types-and-use-cases)
+- [Unlocking the Power of Recursive CTEs in SQL](#unlocking-the-power-of-recursive-ctes-in-sql)
+- [What actually happens when you do an inner join?](#What-actually-happens-when-you-do-an-inner-join?)
 - [Why do we even need Junction Tables?](#why-do-we-even-need-junction-tables)
 
 
@@ -138,3 +138,163 @@ The junction table solves the many-to-many relationship problem by allowing:
 6. Simple updates to student or course information without risking data inconsistencies
 
 This approach provides flexibility, eliminates redundancy, and allows the database to grow with Greenwood High School's needs.
+
+# Understanding SQL Joins: From Basic to Advanced
+
+SQL joins are a fundamental concept in relational databases, allowing us to combine data from multiple tables. In this post, we'll explore different types of joins, starting from basic inner joins and progressing to more advanced concepts like non-equi joins and self joins.
+
+## 1. Inner Joins: The Basics
+
+Let's start with a simple scenario using employees and departments. Consider these two tables:
+
+**Employees:**
+| id | name | department_id |
+|----|------|---------------|
+| 1  | Alice| 1             |
+| 2  | Bob  | 2             |
+| 3  | Charlie | 1          |
+| 4  | Diana| 3             |
+| 5  | Eva  | 2             |
+| 6  | Frank| 4             |
+
+**Departments:**
+| id | name    |
+|----|---------|
+| 1  | HR      |
+| 2  | IT      |
+| 3  | Finance |
+
+To get a list of employees with their department names, we can use a basic inner join:
+
+```sql
+SELECT Employees.name AS employee, Departments.name AS department
+FROM Employees
+INNER JOIN Departments ON Employees.department_id = Departments.id;
+```
+
+This join operation:
+1. Starts with the `Employees` table.
+2. Looks for matching `department_id` in the `Departments` table.
+3. Combines matching data into a single row in the result.
+4. Excludes rows without a match.
+
+The result:
+| employee | department |
+|----------|------------|
+| Alice    | HR         |
+| Bob      | IT         |
+| Charlie  | HR         |
+| Diana    | Finance    |
+| Eva      | IT         |
+
+Key takeaways:
+- Only employees with matching departments are included.
+- It provides more readable data by showing department names instead of IDs.
+- Multiple employees in the same department each get their own row.
+- The order of tables in `FROM` and `JOIN` doesn't affect the final result.
+
+## 2. Non-Equi Joins: Beyond Equality
+
+Non-equi joins use comparison operators other than equality (=) in the join condition. Let's look at an example using a salary grade scenario:
+
+**Employees:**
+| id | name    | department_id | salary |
+|----|---------|---------------|--------|
+| 1  | Alice   | 1             | 55000  |
+| 2  | Bob     | 2             | 62000  |
+| 3  | Charlie | 1             | 48000  |
+| 4  | Diana   | 3             | 71000  |
+| 5  | Eva     | 2             | 59000  |
+
+**Salary_Grades:**
+| grade | min_salary | max_salary |
+|-------|------------|------------|
+| A     | 65000      | 80000      |
+| B     | 55000      | 64999      |
+| C     | 45000      | 54999      |
+
+To match employees with their salary grade:
+
+```sql
+SELECT e.name, e.salary, sg.grade
+FROM Employees e
+INNER JOIN Salary_Grades sg ON e.salary BETWEEN sg.min_salary AND sg.max_salary;
+```
+
+This join:
+1. Starts with the `Employees` table.
+2. Finds `Salary_Grades` rows where the employee's salary is between `min_salary` and `max_salary`.
+3. Combines matching data into the result.
+
+Result:
+| name    | salary | grade |
+|---------|--------|-------|
+| Alice   | 55000  | B     |
+| Bob     | 62000  | B     |
+| Charlie | 48000  | C     |
+| Diana   | 71000  | A     |
+| Eva     | 59000  | B     |
+
+Non-equi joins allow for more flexible conditions and can be used for categorization or finding relationships based on ranges.
+
+## 3. Self Joins with Non-Equi Conditions: Creating Pairs
+
+Self joins occur when a table is joined with itself. Combined with non-equi conditions, they can be powerful for data analysis. Let's use our Employees table to find pairs of employees where one earns more than another:
+
+**Employees:**
+| id | name    | salary |
+|----|---------|--------|
+| 1  | Alice   | 55000  |
+| 2  | Bob     | 62000  |
+| 3  | Charlie | 48000  |
+| 4  | Diana   | 71000  |
+| 5  | Eva     | 59000  |
+
+Here's the SQL query using a self join with a simple non-equi condition:
+
+```sql
+SELECT e1.name AS employee1, e1.salary AS salary1, 
+       e2.name AS employee2, e2.salary AS salary2
+FROM Employees e1
+JOIN Employees e2 ON e1.salary > e2.salary;
+```
+
+This join operation works as follows:
+
+1. It starts with the Employees table (aliased as e1).
+2. For each employee in e1, it looks for other employees (e2) where:
+   - e1's salary is greater than e2's salary
+3. When this condition is met, it creates a row in the result pairing these employees.
+
+The result would be:
+
+| employee1 | salary1 | employee2 | salary2 |
+|-----------|---------|-----------|---------|
+| Bob       | 62000   | Alice     | 55000   |
+| Bob       | 62000   | Charlie   | 48000   |
+| Diana     | 71000   | Bob       | 62000   |
+| Diana     | 71000   | Eva       | 59000   |
+| Diana     | 71000   | Alice     | 55000   |
+| Diana     | 71000   | Charlie   | 48000   |
+| Eva       | 59000   | Alice     | 55000   |
+| Eva       | 59000   | Charlie   | 48000   |
+| Alice     | 55000   | Charlie   | 48000   |
+
+Key points about this self join with a simple non-equi condition:
+
+1. It allows us to compare each employee's salary with every other employee's salary.
+2. The non-equi condition (`>`) lets us find all pairs where one employee earns more than another.
+3. This query includes comparisons of employees with themselves, which may or may not be desired depending on the specific analysis needs.
+4. The result set is not ordered in any specific way, as the focus is on the relationship between the salaries rather than their absolute values.
+5. This type of query can be useful for analyzing salary distributions, identifying potential pay gaps, or understanding the overall salary structure within an organization.
+
+This example demonstrates how combining self joins with even a simple non-equi condition can uncover relationships within a single table, providing valuable insights for data analysis. It's particularly useful when you need to compare elements within a dataset based on inequalities.
+
+## Conclusion
+
+SQL joins are a powerful tool for data analysis and manipulation. From basic inner joins to complex self joins with non-equi conditions, understanding these concepts allows you to extract meaningful insights from relational databases. As you become more comfortable with these techniques, you'll find yourself able to answer increasingly complex questions about your data.
+
+Remember, the key to mastering SQL joins is practice. Try these examples on your own datasets and experiment with different conditions to see what insights you can uncover!
+
+
+artifact https://claude.site/artifacts/59c1e32c-7398-47c6-ab96-22bf0c5be477
