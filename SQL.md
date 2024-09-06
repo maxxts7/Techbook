@@ -300,7 +300,7 @@ Remember, the key to mastering SQL joins is practice. Try these examples on your
 
 artifact https://claude.site/artifacts/59c1e32c-7398-47c6-ab96-22bf0c5be477
 
-#Understanding Implicit Joins in SQL: The Old‐School Approach
+# Understanding Implicit Joins in SQL: The Old‐School Approach
 
 In the world of SQL, joining tables is a fundamental operation that allows us to combine data from multiple sources. While modern SQL syntax emphasizes explicit joins, there's an older technique that still appears in legacy code and some database systems: implicit joins. In this post, we'll explore what implicit joins are, how they work, and why they've fallen out of favor in recent years.
 
