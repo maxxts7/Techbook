@@ -1,11 +1,12 @@
+
+- [What actually happens when you do an inner join?](#what-actually-happens-when-you-do-an-inner-join).
+- [Why do we even need Junction Tables?](#why-do-we-even-need-junction-tables)
+- [Understanding Implicit Joins in SQL: The Old‐School Approach](#understanding-implicit-joins-in-sql-the-old-school-approach)
 - [A Comprehensive Guide to SQL Window Functions](#a-comprehensive-guide-to-sql-window-functions)
 - [Demystifying Common Table Expressions (CTEs) in SQL](#demystifying-common-table-expressions-ctes-in-sql)
 - [The Universal View: All Joins as Filtered Cross Joins](#the-universal-view-all-joins-as-filtered-cross-joins)
-- [Understanding Implicit Joins in SQL: The Old‐School Approach](#understanding-implicit-joins-in-sql-the-old-school-approach)
 - [Understanding Subqueries in SQL: Types and Use Cases](#understanding-subqueries-in-sql-types-and-use-cases)
 - [Unlocking the Power of Recursive CTEs in SQL](#unlocking-the-power-of-recursive-ctes-in-sql)
-- [What actually happens when you do an inner join?](#what-actually-happens-when-you-do-an-inner-join).
-- [Why do we even need Junction Tables?](#why-do-we-even-need-junction-tables)
 
 
 # Why do we even need Junction Tables?
