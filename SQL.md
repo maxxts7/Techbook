@@ -4,7 +4,7 @@
 - [Understanding Implicit Joins in SQL: The Old‐School Approach](#understanding-implicit-joins-in-sql-the-old-school-approach)
 - [Understanding Subqueries in SQL: Types and Use Cases](#understanding-subqueries-in-sql-types-and-use-cases)
 - [Unlocking the Power of Recursive CTEs in SQL](#unlocking-the-power-of-recursive-ctes-in-sql)
-- [What actually happens when you do an inner join?](#what-actually-happens-when-you-do-an-inner join?)
+- [What actually happens when you do an inner join?](#what-actually-happens-when-you-do-an-inner-join?).
 - [Why do we even need Junction Tables?](#why-do-we-even-need-junction-tables)
 
 
