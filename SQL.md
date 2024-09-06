@@ -177,6 +177,8 @@ This join operation:
 3. Combines matching data into a single row in the result.
 4. Excludes rows without a match.
 
+For a more detailed explanation about what happens during join check [The Universal View: All Joins as Filtered Cross Joins](#the-universal-view-all-joins-as-filtered-cross-joins)
+
 The result:
 | employee | department |
 |----------|------------|
